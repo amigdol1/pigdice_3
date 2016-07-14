@@ -3,45 +3,73 @@ function rollOfDice() {
   return Math.floor(Math.random() * 6) + 1;
 }
 
-function player() {
+function Player(name) {
   this.name = name,
   this.totalScore = 0,
   this.currentScore = 0,
-  this.turn = true
+  this.turn = false
 }
 
-// player.prototype.current = function() {
-//   return this.currentScore += rollOfDice
-// }
-//
-// player.prototype.total = function() {
-//   this.totalScore += currentScore
-// }
+Player.prototype.roll = function() {
+ var score = rollOfDice();
+  if (this.totalScore >= 100) {
+    alert("You win!");
+  } else if (score === 1) {
+    this.currentScore = 0;
+    this.turn = false;
+    alert("Whoops, lost your turn");
+    return false;
+  } else {
+    this.currentScore += score;
+  }
+}
+
+Player.prototype.hold = function() {
+  this.totalScore += this.currentScore;
+  this.turn = false;
+  this.currentScore = 0;
+}
 
 $(document).ready(function() {
-  var playerInput1 = new player("Player 1", 0, 0, true);
-  var playerInput2 = new player("Player 2", 0, 0, false);
+  var playerInput1 = new Player("Player 1");
+  var playerInput2 = new Player("Player 2");
+  playerInput1.turn = true;
 
-  $("button#roll").click(function(event) {
-    event.preventDefault();
-    var score = rollOfDice(playerInput1, playerInput2);
-    if (score === 1) {
-      playerInput1.currentScore = 0;
-      playerInput1.turn = false;
-      playerInput2.turn = true;
-      alert("Whoops, lost your turn");
+  $("button#roll").click(function() {
+    if (playerInput1.turn === true) {
+      if (playerInput1.roll() === false) {
+        playerInput2.turn = true;
+      } else {
+        playerInput1.turn = true;
+      }
     } else {
-      playerInput1.currentScore += score;
-      // playerInput2.currentScore += score;
+      if (playerInput2.roll() === false) {
+        playerInput1.turn = true;
+      } else {
+        playerInput2.turn = true;
+      }
     }
     console.log(playerInput1);
+    console.log(playerInput2);
   });
 
-  $("button#hold").click(function(event) {
-    event.preventDefault();
-    playerInput1.totalScore += playerInput1.currentScore;
-    playerInput1.turn = false;
+  $("button#hold").click(function() {
+    if (playerInput1.turn === true) {
+      playerInput1.hold();
+      playerInput2.turn = true;
+    } else {
+      playerInput2.hold();
+      playerInput1.turn = true;
+    }
+
     console.log(playerInput1);
+    console.log(playerInput2);
   });
+
+//   if (playerInput1.turn = false) {
+//     $("button#hold").click(function() {
+//       return playerInput2;
+//   });
+// }
 
 });
