@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.0.0.js"></script>
+    <script src="js/scripts.js"></script>
+    <title>Pig Dice</title>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h1>Let's Play Pig Dice!! Oink</h1>
+      <p>Rules of the game:</p>
+      <ul>
+        <li>If the player rolls a 1, they score nothing and it becomes the next player's turn</li>
+        <li>If the player rolls any other number, it is added to their turn total and the player's turn continues</li>
+        <li>If a player chooses to "hold", their turn total is added to their score, and it becomes the next player's turn</li>
+      </ul>
+      <form id="pig_dice">
+        <button type="submit" class="btn btn-primary" id="roll"> Roll</button>
+        <button type="submit" class="btn btn-primary" id="hold"> Hold</button>
+      </form>
+    </div>
+  </body>
+</html>
